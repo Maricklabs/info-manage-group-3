@@ -32,3 +32,18 @@ BEGIN
     SET stock_qty = stock_qty - quantity_difference
     WHERE food_id = NEW.food_id;
 END;
+
+
+//Invoice trigger
+
+DELIMITER $$
+
+CREATE TRIGGER create_invoice_after_order
+AFTER INSERT ON Order_Record
+FOR EACH ROW
+BEGIN
+    INSERT INTO Invoice (order_id, total_amount, status)
+    VALUES (NEW.order_id, NEW.total_amount, 'Unpaid');
+END$$
+
+DELIMITER ;

@@ -75,15 +75,6 @@ try {
     // Commit transaction
     $pdo->commit();
 
-    // Create Invoice
-    $invoiceQuery = "INSERT INTO Invoice (order_id, total_amount, status) 
-                     VALUES (:order_id, :total_amount, 'Unpaid')";
-    $invoiceStmt = $pdo->prepare($invoiceQuery);
-    $invoiceStmt->execute([
-        ':order_id' => $orderId,
-        ':total_amount' => $totalAmount
-    ]);
-
     echo json_encode([
         'status' => 'success',
         'message' => 'Order placed successfully!',
